@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Food</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Optional for styling -->
+</head>
+<body>
+    <h1>Place Your Order</h1>
+
+    <!-- Order form -->
+    <form method="POST" action="{% url 'order' %}">
+        {% csrf_token %}
+        
+        <!-- Input for the user's email -->
+        <label for="email">Enter your email:</label>
+        <input type="email" name="email" id="email" required>
+
+        <h2>Breakfast</h2>
+        {% if breakfast %}
+            <ul>
+                {% for item in breakfast %}
+                    <li>
+                        <input type="checkbox" name="items[]" value="{{ item.id }}">
+                        {{ item.name }} - ${{ item.price }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No breakfast items available.</p>
+        {% endif %}
+        
+        <h2>Lunch</h2>
+        {% if lunch %}
+            <ul>
+                {% for item in lunch %}
+                    <li>
+                        <input type="checkbox" name="items[]" value="{{ item.id }}">
+                        {{ item.name }} - ${{ item.price }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No lunch items available.</p>
+        {% endif %}
+        
+        <h2>Drinks</h2>
+        {% if drinks %}
+            <ul>
+                {% for item in drinks %}
+                    <li>
+                        <input type="checkbox" name="items[]" value="{{ item.id }}">
+                        {{ item.name }} - ${{ item.price }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No drinks available.</p>
+        {% endif %}
+        
+        <!-- Submit button -->
+        <button type="submit">Place Order</button>
+    </form>
+
+</body>
+</html>
